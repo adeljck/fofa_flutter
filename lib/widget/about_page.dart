@@ -26,7 +26,7 @@ class AboutPage extends StatelessWidget {
         child: RichText(
           text: new TextSpan(
               text:
-                  "Fofa Searcher Develop By Adeljck With Flutter FrameWork\nsource_code: ",
+                  "Fofa Searcher Develop By Adeljck\nPower By Flutter\nsource_code: ",
               style: TextStyle(color: Colors.black, fontSize: 20),
               children: [
                 TextSpan(

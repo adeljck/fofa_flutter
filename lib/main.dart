@@ -3,14 +3,16 @@ import 'package:exploitman/conf/config.dart';
 import 'package:exploitman/widget/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'constants/constants.dart';
-import 'widget/info_page.dart';
 import "conf/init.dart";
+import 'package:desktop_window/desktop_window.dart';
 
 var fofa = FoFaApi();
 void main(List<String> args) {
   debugPaintSizeEnabled = !true;
   WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+     DesktopWindow.setWindowSize(Size(1086, 827));
+  }
   runApp(FoFaSearcher());
 }
 

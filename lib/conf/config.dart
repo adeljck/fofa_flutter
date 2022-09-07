@@ -1,15 +1,15 @@
 import 'dart:convert';
-
-import 'package:yaml/yaml.dart';
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 class FoFaApi {
   String fofa_api_key = "";
   String fofa_email = "";
-  int max_size = 100;
+  String max_size = "100";
   String fofa_api = "https://fofa.info";
   bool isProxy = false;
   String Proxy = "";
+  String ProxyType="http";
+  bool isCorrect = false;
   Map toJson() {
     Map map = new Map();
     map["fofa_email"] = this.fofa_email;
@@ -18,6 +18,7 @@ class FoFaApi {
     map["max_size"] = this.max_size;
     map["isProxy"] = this.isProxy;
     map["Proxy"] = this.Proxy;
+    map["ProxyType"] = this.ProxyType;
     return map;
   }
 
@@ -29,7 +30,23 @@ class FoFaApi {
     }
     return;
   }
-
+  checkApi()async{
+      var url = Uri.https("fofa.info","/api/v1/info/my",{"email":fofa_email,"key":fofa_api_key});
+      var response =  await http.get(url);
+      if(response.statusCode==200 && jsonDecode(response.body)["error"]!=false){
+          isCorrect = true;
+          return [true,jsonDecode(response.body)];
+      }
+      return [false];
+  }
+  getAccountinfo(){
+      List check = checkApi();
+      if (check[0]){
+          return check[1];
+      }else{
+        return {};
+      }
+  }
   FoFaApi() {
     var configPath = './config.json';
     _CreateConfigFile(configPath);
